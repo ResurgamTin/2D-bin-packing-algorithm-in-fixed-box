@@ -1,37 +1,63 @@
-### git bash
+<h3 align="center">固定框内二维矩阵装箱算法</h3>
 
-ctrl + l：清屏
+### 1、总体结构
 
-git config -l：查看所有的配置信息
+包含 Struct.h（内含矩形二叉树结点和矩形块结构及其处理函数），Algorithm.h（内含矩形块排序及排版算法），Interface.h（内含接口部分，即供用户使用的 Rank，Fit，getX，getY 函数，包含在 CBlockLayout 接口类中）。
 
-git init .：设置 git 仓库，即创建一个新项目
+使用时只要包含 Interface.h 头文件即可。
 
-<img src="imgs/git.assets/image-20220727060521872.png" alt="image-20220727060521872" style="zoom:50%;" />
+### 2、函数说明
 
-文件夹里的 .git 文件夹表示该文件夹是一个 git 仓库，若删除 .get 文件夹，则该文件夹变为普通文件夹。
+#### 1、Rank 函数
 
-<img src="imgs/git.assets/image-20220727060811596.png" alt="image-20220727060811596" style="zoom:50%;" />
+``void Rank(vector<vector<int>>& bInfo);``
 
-git status：显示 git 仓库的更改状态
+输入：
 
-git add index.html：向暂存区中添加文件
+bInfo：二维数组，其中每个元素表示不同矩形块的 { width, hegiht, id }
 
-git rm --cached index.html：从暂存区中删除文件
+功能：
 
-git add .：向暂存区中添加当前目录下的所有文件
+将每个矩形块以最大边降序排序。
 
-git rm --cached .：从暂存区中删除当前目录下的所有文件
+#### 2、Fit 函数
 
-git add -A：向暂存区中添加当前仓库下的所有文件
+``void Fit(int BG_W, int BG_H, vector<vector<int>> bInfo);``
 
-git commit -m "bootstrap project"：bootstrap project 是 commit message
+输入：
 
-git log
+BG_W：背景矩形块的宽
 
-<img src="imgs/git.assets/image-20220727221932849.png" alt="image-20220727221932849" style="zoom:50%;" />
+BG_H：背景矩形块的高
 
-git diff
+bInfo：同上，可以是排好序的二维数组，也可以是指定顺序的二维数组。
 
-![image-20220727222429106](imgs/git.assets/image-20220727222429106.png)
+功能：
 
-git restore index.js：放弃更改
+将按照一定算法（以最大边降序排序的顺序，或者指定顺序）从左上角开始排版后的结果存储在 CAns 中，CAns 是一个 n*3 的二维数组，其中 n 个元素分别表示不同矩形块的 {x, y, id}。
+
+#### 3、getX 函数
+
+``int getX(int id);``
+
+输入：
+
+id：矩形块的 id 值
+
+返回：
+
+矩形块应放置的 x 坐标。
+
+#### 4、getX 函数
+
+``int getY(int id);``
+
+输入：
+
+id：矩形块的 id 值
+
+返回：
+
+矩形块应放置的 y 坐标。
+
+==注：(x, y) 为矩形块左上角点的坐标。==
